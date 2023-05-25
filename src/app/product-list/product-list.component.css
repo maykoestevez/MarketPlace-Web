@@ -1,0 +1,16 @@
+.card{
+    min-width: 25%;
+    height: 10rem;
+    margin-right:25px;
+    box-shadow: 1px 4px 7px 2px #e4e4e4;
+    padding: 15px;
+    cursor: pointer;
+}
+.card:hover{
+    background-color: #d8d8d8;
+}
+.product-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

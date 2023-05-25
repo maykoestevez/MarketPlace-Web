@@ -1,10 +1,14 @@
-<div class="container">
-    <h2>Product List</h2>
-    <div class="product-list">
-        <div class="card" *ngFor="let product of $products | async">
-            <div class="card-details">
-                <label>ProductName: {{product.name}}</label>
-            </div>
+<h2>Product List</h2>
+<div class="product-list">
+    <div (click)="navigateToDetails(product.id)" class="card" *ngFor="let product of $products | async">
+        <div class="card-details">
+            <h3>{{product.name}}</h3>
+            <p>
+                <label>{{product.description}}</label>
+            </p>
+            <p> 
+                <label>{{product.price | currency}}</label>
+            </p>
         </div>
     </div>
 </div>
