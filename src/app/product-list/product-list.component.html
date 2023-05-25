@@ -1,0 +1,10 @@
+<div class="container">
+    <h2>Product List</h2>
+    <div class="product-list">
+        <div class="card" *ngFor="let product of $products | async">
+            <div class="card-details">
+                <label>ProductName: {{product.name}}</label>
+            </div>
+        </div>
+    </div>
+</div>
