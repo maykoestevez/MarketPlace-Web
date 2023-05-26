@@ -1,2 +1,13 @@
 <h2>Product Details</h2>
-
+<div class="product-details">
+    <form [formGroup]="productForm" (ngSubmit)="save()" >
+        <div class="input-fields">
+            <input type="text" formControlName="name" placeholder="Name">
+            <input type="text" formControlName="description" placeholder="Description">
+            <input type="text" formControlName="category" placeholder="Category">
+            <input type="number" formControlName="price" placeholder="Price">
+            <input type="number" formControlName="quantity" placeholder="Quantity">
+        </div>
+        <button type="submit" [disabled]="productForm.invalid">Save</button>
+    </form>
+</div>

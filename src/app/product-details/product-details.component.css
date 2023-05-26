@@ -1,0 +1,10 @@
+.input-fields{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.input-fields>input{
+    margin-bottom: 5%;
+    padding: 10px;
+}
