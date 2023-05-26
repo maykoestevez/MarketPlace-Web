@@ -32,7 +32,4 @@ export class ProductService {
     deleteProduct(productId: number): Observable<object> {
         return this.httpClient.delete(`${this.apiUrl}/product/${productId}`);
     }
-
-
-
 }

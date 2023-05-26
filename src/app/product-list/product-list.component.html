@@ -1,4 +1,7 @@
-<h2>Product List</h2>
+<div class="header">
+    <h2>Product List</h2>
+    <button (click)="navigateToDetails(0)" class="add">Create Product</button>
+</div>
 <div class="product-list">
     <div (click)="navigateToDetails(product.id)" class="card" *ngFor="let product of $products | async">
         <div class="card-details">

@@ -1,13 +1,21 @@
-<h2>Product Details</h2>
+<h2>Product Details </h2>
+<a href="/product-list">Back to Product List</a>
+<p></p>
 <div class="product-details">
-    <form [formGroup]="productForm" (ngSubmit)="save()" >
+    <form [formGroup]="productForm" (ngSubmit)="save()">
         <div class="input-fields">
-            <input type="text" formControlName="name" placeholder="Name">
+            <label for="input-name">Name</label>
+            <input type="text" id="input-name" formControlName="name" placeholder="Name">
+            <label for="input-name">Description</label>
             <input type="text" formControlName="description" placeholder="Description">
+            <label for="input-name">Category</label>
             <input type="text" formControlName="category" placeholder="Category">
+            <label for="input-name">Price</label>
             <input type="number" formControlName="price" placeholder="Price">
+            <label for="input-name">Quantity</label>
             <input type="number" formControlName="quantity" placeholder="Quantity">
         </div>
-        <button type="submit" [disabled]="productForm.invalid">Save</button>
+        <button id="save-button" type="submit" [disabled]="productForm.invalid">Save</button>
+        <button *ngIf="!newProduct" type="button" (click)="delete()">Delete</button>
     </form>
 </div>

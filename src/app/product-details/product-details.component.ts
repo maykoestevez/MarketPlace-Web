@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { Product } from '../product';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -12,14 +12,18 @@ import { Validators } from '@angular/forms';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit,OnDestroy {
 
-  $product!: Observable<Product>;
+  newProduct: boolean = false;
+  productId: number = 0;
   productForm!: FormGroup;
+  unsubscribe!: Subject<boolean>;
+
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder) {
+    formBuilder: FormBuilder) {
+
     this.productForm = formBuilder.group({
       id: [0, Validators.required],
       name: ['', Validators.required],
@@ -27,17 +31,18 @@ export class ProductDetailsComponent implements OnInit {
       price: [null, Validators.required],
       category: [''],
       quantity: ['', Validators.required]
-    })
+    });
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'] | 0;
-    this.getProductById(id);
+    this.productId = this.route.snapshot.params['id'] | 0;
+    this.newProduct = this.productId === 0;
+    if (!this.newProduct) this.getProductById(this.productId);
   }
 
   getProductById(productId: number) {
     this.productService
-      .getProductById(productId)
+      .getProductById(productId).pipe(takeUntil(this.unsubscribe))
       .subscribe(product => this.productForm.setValue(product));
 
   }
@@ -45,12 +50,33 @@ export class ProductDetailsComponent implements OnInit {
   async save() {
     try {
       const product = this.productForm.value;
-      await this.productService.updateProduct(product).toPromise();
+
+      if (this.newProduct) {
+        await this.productService.createProduct(product).toPromise();
+      } else {
+        await this.productService.updateProduct(product).toPromise();
+      }
+
       this.router.navigate(['product-list']);
+
     } catch (error) {
       alert(error);
     }
 
+  }
+
+  async delete() {
+    try {
+      await this.productService.deleteProduct(this.productId).toPromise();
+      this.router.navigate(['product-list']);
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next(true);
+    this.unsubscribe.complete();
   }
 
 }
