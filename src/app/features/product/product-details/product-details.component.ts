@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
-import { Product } from '../product';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
@@ -12,12 +11,12 @@ import { Validators } from '@angular/forms';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit,OnDestroy {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   newProduct: boolean = false;
   productId: number = 0;
   productForm!: FormGroup;
-  unsubscribe!: Subject<boolean>;
+  unsubscribe = new Subject();
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute,

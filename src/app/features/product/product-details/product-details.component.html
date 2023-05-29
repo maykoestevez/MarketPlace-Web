@@ -4,16 +4,20 @@
 <div class="product-details">
     <form [formGroup]="productForm" (ngSubmit)="save()">
         <div class="input-fields">
-            <label for="input-name">Name</label>
-            <input type="text" id="input-name" formControlName="name" placeholder="Name">
+            <label for="input-name">Name <span>*</span></label>
+            <input required type="text" id="input-name" formControlName="name" placeholder="Name">
             <label for="input-name">Description</label>
-            <input type="text" formControlName="description" placeholder="Description">
+            <input required type="text" formControlName="description" placeholder="Description">
             <label for="input-name">Category</label>
             <input type="text" formControlName="category" placeholder="Category">
-            <label for="input-name">Price</label>
+            <label for="input-name">Price <span>*</span></label>
             <input type="number" formControlName="price" placeholder="Price">
-            <label for="input-name">Quantity</label>
+            <label for="input-name">Quantity <span>*</span></label>
             <input type="number" formControlName="quantity" placeholder="Quantity">
+            <div *ngIf="productForm.invalid && productForm.dirty" class="error-message">
+                <label>Required fields must be provided</label>
+            </div>
+            <p></p>
         </div>
         <button id="save-button" type="submit" [disabled]="productForm.invalid">Save</button>
         <button *ngIf="!newProduct" type="button" (click)="delete()">Delete</button>
